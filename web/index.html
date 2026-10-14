@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f2">
+  <meta name="description" content="PonaMoji 本地版：中文通过电脑上的中英与英 Toki Pona 双模型翻译，再使用原 120 词根映射生成 Emoji。无需 API 密钥，无远程翻译 API。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>PonaMoji 本地版 · 把语言变成 Emoji</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="engine.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="header wrap">
+    <a class="brand" href="#translator" aria-label="PonaMoji 首页"><span class="brand-mark" aria-hidden="true">✳</span><span>Pona<span class="brand-soft">Moji</span><small>SMALL WORDS. BIG FEELINGS.</small></span></a>
+    <nav aria-label="主导航"><a class="nav-current" href="#translator">翻译</a><a href="#dictionary">词典 <span class="nav-count">120</span></a><a href="#about">关于</a></nav>
+    <button id="theme" class="icon-button theme" aria-label="切换深色模式" title="切换深色模式"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14a8 8 0 0 1-10-10A8 8 0 1 0 20 14Z"/></svg></button>
+  </header>
+  <main class="wrap">
+    <section class="hero" id="translator" aria-labelledby="heroTitle">
+      <div class="hero-copy"><div class="eyebrow"><span class="tiny-star">✳</span> A LITTLE LANGUAGE FOR EVERYONE</div><h1 id="heroTitle">把想说的，<br class="mobile-break">变成 <span class="emoji-title">Emoji<span class="title-dot">.</span></span></h1><p>少一点复杂，多一点表达。<br class="mobile-break">用 120 个词根，传递你的想法。</p></div>
+      <div class="hero-art" aria-hidden="true"><span class="floating glyph-one">🙋</span><span class="floating glyph-two">❤️</span><span class="floating glyph-three">🫵</span><span class="art-caption">mi olin e sina</span></div>
+    </section>
+    <div class="translator-heading"><div class="availability"><span class="status-dot"></span>电脑本地双模型 <span class="heading-divider">/</span><span>无 API 密钥</span><span class="heading-divider">/</span><span>无翻译 API 费用</span></div><span class="live-label" id="liveLabel">点击翻译 · Ctrl / ⌘ + Enter</span></div>
+    <div class="local-controls" id="localControls"><label for="zhMode">中文翻译方式 <select id="zhMode"><option value="model">本地模型 · 中文 → 英文 → Toki Pona</option><option value="rules">规则模式 · 简单句型</option></select></label><button id="translate" class="translate-button" disabled>翻译</button></div>
+    <div class="model-service" id="modelService"><span class="service-dot" id="serviceDot" aria-hidden="true"></span><span id="modelStatus" role="status" aria-live="polite">正在连接本地模型服务…</span><button id="refreshStatus" class="text-button" type="button">刷新状态</button></div>
+    <section class="translator" aria-label="本地翻译器">
+      <div class="input-panel panel">
+        <div class="panel-top"><label class="select-label" for="from">从 <select id="from"><option value="zh">中文</option><option value="tp">Toki Pona</option><option value="emoji">PonaMoji · Emoji</option></select></label><button class="icon-button" id="clear" aria-label="清空输入" title="清空输入"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
+        <label class="sr-only" for="source">待翻译的文本</label><textarea id="source" maxlength="3000" spellcheck="false" placeholder="输入你想说的话…" aria-describedby="inputHint"></textarea>
+        <div class="panel-bottom"><span id="inputHint" class="muted">试试「我想喝水。」</span><span id="charCount" class="muted">0 / 3000</span></div>
+      </div>
+      <button class="swap" id="swap" aria-label="交换翻译方向" title="交换翻译方向"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h15m-4-4 4 4-4 4M20 17H5m4-4-4 4 4 4"/></svg></button>
+      <div class="output-panel panel">
+        <div class="panel-top"><label class="select-label" for="to">到 <select id="to"><option value="emoji">PonaMoji · Emoji</option></select></label><span class="output-badge" id="outputBadge">EMOJI</span></div>
+        <div class="output-body" tabindex="0" aria-label="翻译结果"><div class="result-placeholder" id="resultPlaceholder"><span aria-hidden="true">🗣️ <span class="faint-arrow">→</span> ✨</span><p>你的想法，可以很简单。</p></div><div id="result" class="emoji-output" hidden></div></div>
+        <div class="panel-bottom"><span class="muted" id="resultMeta">等你输入第一句话</span><button id="copy" class="copy-button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg><span id="copyLabel">复制结果</span></button></div>
+      </div>
+    </section>
+    <div class="translation-feedback" id="feedback" hidden><div class="feedback-top"><span class="feedback-icon" id="feedbackIcon" aria-hidden="true">✓</span><p id="status" role="status" aria-live="polite"></p></div><ul id="notes" hidden></ul></div>
+    <details id="englishBridge" class="bridge" hidden><summary><span>查看英文中间结果</span><span class="muted">中文 → 英文 <span aria-hidden="true">⌄</span></span></summary><div class="bridge-inner"><p id="englishIntermediate"></p></div></details>
+    <details id="bridge" class="bridge" hidden><summary><span>查看 Toki Pona 表达</span><span class="muted">理解 Emoji 的词序 <span aria-hidden="true">⌄</span></span></summary><div class="bridge-inner"><code id="intermediate"></code><div class="token-line" id="tokens"></div></div></details>
+    <section class="examples-section" aria-labelledby="examplesTitle"><div class="section-heading"><h2 id="examplesTitle">从一句简单的话开始</h2><span class="muted">点一下，试试看</span></div><div id="examples" class="examples"></div></section>
+    <section class="dictionary-section" id="dictionary" aria-labelledby="dictionaryTitle"><div class="dictionary-heading"><div><div class="eyebrow">THE BUILDING BLOCKS</div><h2 id="dictionaryTitle">120 个词根，无限种表达<span class="title-dot">.</span></h2><p class="muted">每个词根对应一个固定 Emoji。点击词卡，加入你的句子。</p></div><a class="download-link" href="dictionary.json" download="PonaMoji-dictionary.json">下载词典 <span aria-hidden="true">↗</span></a></div>
+      <div class="dictionary-toolbar"><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span class="sr-only">搜索词根、中文释义或 Emoji</span><input id="search" type="search" placeholder="搜索词根、中文或 Emoji…" autocomplete="off"></label><label class="category-label"><span class="sr-only">词根分类</span><select id="category"><option value="全部">全部分类</option></select></label><span class="muted" id="dictCount">120 个词根</span></div>
+      <div id="words" class="word-grid"></div><p id="noWords" class="empty-search" hidden>没有找到这个词根。试试中文释义或更短的关键词。</p><button id="expandWords" class="expand-button">展开全部 120 个词根 <span aria-hidden="true">↓</span></button>
+    </section>
+    <section id="about" class="about" aria-labelledby="aboutTitle"><div class="about-intro"><span class="about-symbol" aria-hidden="true">🗣️ 👍</span><h2 id="aboutTitle">语言小一点，<br>世界近一点。</h2><p>PonaMoji 沿用上传项目的 120 词根映射，用 Emoji 书写 Toki Pona。本地版使用电脑上的两个专用机器翻译模型，将中文先翻成英文，再翻成 Toki Pona，最后按原词典转写为 Emoji。</p></div><div class="about-details"><details open><summary>翻译时会发生什么？</summary><p>默认的中文翻译在本机 Python 服务中运行中→英和英→Toki Pona 模型，不调用远程翻译 API，也不需要密钥。下载并加载模型后，可断网使用。输入后点击“翻译”，或按 Ctrl / ⌘ + Enter；使用 CPU 时可能需要等待。也可手动切换到浏览器规则模式，适用于已有简单句型。Toki Pona 与 Emoji 的转写仍在浏览器内完成。</p></details><details><summary>为什么翻回来会不一样？</summary><p>少量词根表达的概念很宽。例如 🐾 表示兽类动物，不能单独区分猫和狗；🍎 表示果蔬，并不专指苹果。目前没有反向翻译模型；Emoji → 中文仍使用规则生成近似释义。双模型也可能产生语义误差、错误语法或词典外词根，不能保证准确还原原意。词典外内容保留在 ⟦括号⟧ 中并提示，不会悄悄替换。可以展开英文和 Toki Pona 中间结果来查看每一步。</p></details><details><summary>怎样写出一个 PonaMoji 句子？</summary><p>一般主语后加 🔹（li），直接宾语前加 🎯（e）。主语单独是 🙋（mi）或 🫵（sina）时省略 li。修饰词通常放在名词后。建议 Emoji 之间保留空格；连写也能识别。Toki Pona 转写保留标点，旧词形沿用原项目的归一化约定。</p><code class="grammar-example">🙋 ❤️ 🎯 🫵. <span>mi olin e sina. · 我爱你。</span></code></details>
+      <details id="credits"><summary>模型与资料署名</summary>
+        <p>中文 → 英文使用赫尔辛基大学 Language Technology Research Group 的 <a href="https://huggingface.co/Helsinki-NLP/opus-mt-zh-en" target="_blank" rel="noopener noreferrer">Helsinki-NLP/opus-mt-zh-en</a>（<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>）；英文 → Toki Pona 使用 <a href="https://linguardia.com" target="_blank" rel="noopener noreferrer">Linguardia</a> 的 <a href="https://huggingface.co/linguardia/opus-mt-en-tok" target="_blank" rel="noopener noreferrer">opus-mt-en-tok</a>（<a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache 2.0</a>），基于 Helsinki-NLP/opus-mt-en-mul 微调。运行时在内存中量化，未微调下载的权重。</p>
+        <p>感谢 <a href="https://tatoeba.org/en/terms_of_use" target="_blank" rel="noopener noreferrer">Tatoeba 及其志愿贡献者</a>提供训练句对；英 → Toki Pona 模型卡标注语料为 CC BY 2.0 FR / 部分 CC0 1.0。Toki Pona 由 <a href="https://tokipona.org/" target="_blank" rel="noopener noreferrer">Sonja Lang</a> 创作，补充语法参考 <a href="https://lipu-sona.pona.la/en/10/" target="_blank" rel="noopener noreferrer">jan Lentan 及社区贡献者的 lipu sona pona 课程</a>；Emoji 编码参考 <a href="https://www.unicode.org/reports/tr51/" target="_blank" rel="noopener noreferrer">Unicode Consortium 的 UTS #51</a>。120 词根映射沿用用户提供的 PonaMoji v1.3，原包未附作者及明确许可。</p>
+        <p>OPUS-MT 研究引用：<a href="https://aclanthology.org/2020.eamt-1.61/" target="_blank" rel="noopener noreferrer">Jörg Tiedemann、Santhosh Thottingal（2020）</a>与 <a href="https://doi.org/10.1007/s10579-023-09704-w" target="_blank" rel="noopener noreferrer">Tiedemann 等（2024）</a>。完整模型版本、依赖许可与参考资料见 <a href="https://github.com/XDIOEZ/PonaMoji/blob/main/THIRD_PARTY_NOTICES.md" target="_blank" rel="noopener noreferrer">项目署名清单</a>和 <a href="https://github.com/XDIOEZ/PonaMoji/blob/main/CITATIONS.bib" target="_blank" rel="noopener noreferrer">BibTeX 引用</a>。</p>
+      </details></div></section>
+  </main>
+  <footer class="footer wrap"><span class="footer-brand">✳ PonaMoji <span class="muted">本地双模型版 · 基于原 v1.3</span></span><a href="#credits">模型与资料署名</a><div><a href="https://tokipona.org/" target="_blank" rel="noopener noreferrer">Toki Pona</a><span aria-hidden="true">·</span><a href="https://www.unicode.org/reports/tr51/" target="_blank" rel="noopener noreferrer">Unicode Emoji</a></div></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="noscript">请启用 JavaScript，并通过本地服务打开本页面。</p></noscript>
+</body>
+</html>

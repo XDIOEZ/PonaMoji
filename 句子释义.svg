@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="208" viewBox="0 0 960 208" role="img" aria-labelledby="title desc">
+<title id="title">两句 PonaMoji 的近似释义</title><desc id="desc">第一句祈使每天吃东西，第二句陈述身体每天长大。没有明确编码健康、强壮或因果关系。</desc>
+<rect width="960" height="208" rx="18" fill="#f6f7f2"/>
+<g font-family="Segoe UI,Microsoft YaHei,sans-serif" fill="#263329">
+<rect x="18" y="18" width="452" height="144" rx="12" fill="#fff" stroke="#dfe4da"/><rect x="490" y="18" width="452" height="144" rx="12" fill="#edf3e4" stroke="#dfe4da"/>
+<text x="36" y="48" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="25">📣 🍽️ 📍 ⏰ ☀️ 🌐.</text>
+<text x="36" y="84" font-family="Consolas,monospace" font-size="15">o moku lon tenpo suno ale.</text><text x="36" y="124" font-size="22" font-weight="600">请每天吃东西。</text><text x="36" y="147" font-size="11" fill="#69776a">o：祈使　moku：吃　tenpo suno ale：每天</text>
+<text x="508" y="48" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="25">⏰ ☀️ 🌐 🔻 🩻 🔹 🛬 🐘.</text>
+<text x="508" y="84" font-family="Consolas,monospace" font-size="14">tenpo suno ale la sijelo li kama suli.</text><text x="508" y="124" font-size="22" font-weight="600">身体一天天长大。</text><text x="508" y="147" font-size="11" fill="#69776a">sijelo：身体　kama suli：变大／长大</text>
+<text x="22" y="188" font-size="12" fill="#69776a">这是词根与语法的近似解释；句中没有明确的“因此”“健康”或“强壮”。</text>
+</g></svg>

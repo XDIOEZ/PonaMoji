@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="236" viewBox="0 0 1000 236" role="img" aria-labelledby="title desc">
+<title id="title">PonaMoji 本地双模型运行流程</title><desc id="desc">网页提交中文，本机中英模型翻成英文，英 Toki Pona 模型生成 Toki Pona，经原120词根字典转成 Emoji。两个模型文件已保存本机，当前使用 CPU INT8 推理。</desc>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 7 3.5 0 7" fill="#779460"/></marker></defs>
+<rect width="1000" height="236" rx="20" fill="#f6f7f2"/>
+<g font-family="Segoe UI,Microsoft YaHei,sans-serif" fill="#263329">
+<text x="30" y="35" font-size="18" font-weight="700">PonaMoji · 运行在你的电脑上</text><text x="30" y="59" font-size="12" fill="#69776a">http://127.0.0.1:18713 · 模型文件已下载 · 当前 CPU INT8 · 无远程翻译 API</text>
+<rect x="30" y="83" width="203" height="93" rx="12" fill="#fff" stroke="#dfe4da"/><text x="47" y="108" font-size="11" fill="#69776a">① 网页输入中文</text><text x="47" y="141" font-size="19" font-weight="600">今天的天气真好。</text>
+<rect x="276" y="83" width="203" height="93" rx="12" fill="#fff" stroke="#dfe4da"/><text x="293" y="108" font-size="11" fill="#69776a">② 本机中 → 英模型</text><text x="293" y="141" font-size="19" font-weight="600">It’s a nice day.</text>
+<rect x="522" y="83" width="203" height="93" rx="12" fill="#fff" stroke="#dfe4da"/><text x="539" y="108" font-size="11" fill="#69776a">③ 本机英 → TP 模型</text><text x="539" y="141" font-size="17" font-weight="600">ona li tenpo suno pona.</text>
+<rect x="768" y="83" width="202" height="93" rx="12" fill="#edf3e4" stroke="#cddbbd"/><text x="785" y="108" font-size="11" fill="#69776a">④ 原 120 词根固定映射</text><text x="785" y="148" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="26">🧍 🔹 ⏰ ☀️ 👍</text>
+<g stroke="#779460" stroke-width="2" marker-end="url(#arrow)"><path d="M240 130h27"/><path d="M486 130h27"/><path d="M732 130h27"/></g>
+<text x="30" y="204" font-size="12" fill="#69776a">上方为本次实际模型输出：英文中转已简化天气信息；模型可误译，展开中间结果判断含义。</text>
+</g></svg>

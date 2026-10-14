@@ -1,0 +1,26 @@
+# Local environment and generated files
+.venv/
+__pycache__/
+*.py[cod]
+runtime/
+*.log
+.env
+.env.*
+
+# Keep provenance; download weights and tokenizers during installation.
+models/*
+!models/manifest.json
+!models/zh-en/
+!models/en-tok/
+models/zh-en/*
+!models/zh-en/README.md
+models/en-tok/*
+!models/en-tok/README.md
+*.part
+
+# Editor and OS files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
